@@ -1,0 +1,12 @@
+[package]
+name = "mapinto"
+version = "0.1.0"
+authors = ["Alexey Gerasimov"]
+edition = "2018"
+description = "Add `map_into()` and `map_err_into()` methods to `Result` and `Future` types, that replace `map(Into::into)` and `map_err(Into::into)` respectively"
+keywords = ["map_into", "map_err", "map_err_into", "conversion"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/fan-tom/mapinto"
+
+[dependencies]
+futures = "0.1.26"
