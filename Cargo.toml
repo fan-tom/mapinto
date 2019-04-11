@@ -1,6 +1,6 @@
 [package]
 name = "mapinto"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Alexey Gerasimov"]
 edition = "2018"
 description = "Add `map_into()` and `map_err_into()` methods to `Result` and `Future` types, that replace `map(Into::into)` and `map_err(Into::into)` respectively"

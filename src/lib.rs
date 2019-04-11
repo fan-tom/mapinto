@@ -1,4 +1,4 @@
-use futures::{Future, Map, MapErr, AndThen};
+use futures::{Future, Map, MapErr, AndThen, IntoFuture};
 
 pub trait ResultMapInto<U> {
     type Output;
@@ -61,15 +61,15 @@ pub trait FutureFlatMapErrInto {
 
 impl<F, E> FutureFlatMapErrInto for F
     where F: Future,
-          F::Item: Future<Error=E>,
+          F::Item: IntoFuture<Error=E>,
           F::Error: From<E>
 {
     type Output = AndThen<
         F,
-        <F::Item as FutureMapErrInto<F::Error>>::Output,
-        fn(F::Item) -> <F::Item as FutureMapErrInto<F::Error>>::Output
+        <<F::Item as IntoFuture>::Future as FutureMapErrInto<F::Error>>::Output,
+        fn(F::Item) -> <<F::Item as IntoFuture>::Future as FutureMapErrInto<F::Error>>::Output
     >;
     fn flat_map_err_into(self) -> Self::Output {
-        self.and_then(FutureMapErrInto::map_err_into)
+        self.and_then(|f| f.into_future().map_err_into())
     }
 }
